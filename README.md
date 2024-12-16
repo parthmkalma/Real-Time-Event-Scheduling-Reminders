@@ -147,12 +147,6 @@ If you want to contribute to this project, feel free to fork it and submit pull 
 
 ---
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## Notes
 
 - Ensure that MongoDB is up and running either locally or via MongoDB Atlas, and update the MongoDB connection string in the server if necessary.
