@@ -1,3 +1,4 @@
+// server.js
 const express = require("express");
 const mongoose = require("mongoose");
 const http = require("http");
@@ -28,6 +29,7 @@ mongoose
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err);
   });
+
 // Handle WebSocket connection
 io.on("connection", (socket) => {
   console.log("A user connected");
@@ -55,7 +57,7 @@ app.post("/events", async (req, res) => {
   try {
     const { title, date, time, description, reminder } = req.body;
 
-    // Save the event to the database (pseudo-code)
+    // Save the event to the database
     const newEvent = await Event.create({
       title,
       date,
@@ -64,13 +66,15 @@ app.post("/events", async (req, res) => {
       reminder,
     });
 
+    // Schedule reminders for the event
+    cronJob.scheduleReminder(newEvent,io);
+
     // Respond to the client
     return res
       .status(201)
       .json({ message: "Event created successfully!", event: newEvent });
   } catch (error) {
     console.error(error);
-    // Send the error response
     return res.status(500).json({ message: "An error occurred", error });
   }
 });
